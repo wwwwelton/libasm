@@ -3,7 +3,7 @@ SOURCES_DIR = ./
 
 OBJ_DIR = objects
 
-HEADERS =
+HEADERS = header.h
 
 SOURCES = $(addprefix $(SOURCES_DIR)/, $(SOURCES_FILES))
 
