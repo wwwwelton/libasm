@@ -15,7 +15,8 @@ section .text
 ft_call:
         mov     rax, 1                               ;system call number
         mov     rdi, 1                               ;stdout fd
-        mov     rsi, msg                             ;str to print
+        ; mov     rsi, msg                           ;str to print
+        lea     rsi, [rel msg]                       ;str to print
         mov     rdx, len                             ;str len
         syscall                                      ;call kernel
 
