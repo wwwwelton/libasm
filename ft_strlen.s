@@ -4,7 +4,6 @@ section .text
 ft_strlen:
                                 ;size_t strlen(const char *s);
     mov rax, 0                  ;init counter
-    ; mov rsi, [rdi]            ;save first string address
 
 len:
     cmp byte [rdi], 0x0         ;dereference and compare if == '\0'
