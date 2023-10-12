@@ -6,7 +6,7 @@ ft_strlen:
     mov rax, 0                  ;init counter
 
 len:
-    cmp byte [rdi], 0x0         ;dereference and compare if == '\0'
+    cmp byte [rdi], 0           ;dereference and compare if == '\0'
     je end                      ;if str ends return
 
     inc rdi                     ;increment str address
