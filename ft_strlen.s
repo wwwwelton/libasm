@@ -1,18 +1,16 @@
 section .text
     global ft_strlen
 
+;size_t strlen(const char *s);
 ft_strlen:
-                                ;size_t strlen(const char *s);
-    mov rax, 0                  ;init counter
+    mov rax, 0      ;init counter
 
-len:
-    cmp byte [rdi], 0           ;dereference and compare if == '\0'
-    je end                      ;if str ends return
+.loop:
+    cmp byte [rdi], 0 ;dereference and compare if == '\0'
+    je .end         ;if str ends, ZF == 0, returns
+    inc rdi         ;increment str address
+    inc rax         ;increment counter
+    jmp .loop       ;loop until ends str
 
-    inc rdi                     ;increment str address
-    inc rax                     ;increment counter
-
-    jmp len                     ;loop until ends str
-
-end:
-    ret
+.end:
+    ret             ;return the content in the rax
