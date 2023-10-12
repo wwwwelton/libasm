@@ -5,6 +5,8 @@
 #include <errno.h>
 
 int main(void) {
+	ssize_t ret = 0;
+	setbuf(stdout, NULL);
 	// printf("%d", ft_call());
 	// char* str = strdup("Libasmr");
 
@@ -20,7 +22,20 @@ int main(void) {
 
 	// printf("%ld", write(90, "hello ", 7));
 	// printf("\n%s", strerror(errno));
-	printf("%ld", ft_write(90, "hello ", 7));
+	ret = ft_write(1, "hello ", 0);
+	printf("%ld", ret);
+	printf("\n%s", strerror(errno));
+
+	printf("\n=========\n");
+
+	ret = ft_write(90, "hello ", 7);
+	printf("%ld", ret);
+	printf("\n%s", strerror(errno));
+
+	printf("\n=========\n");
+
+	ret = ft_write(1, "hello ", 7);
+	printf("%ld", ret);
 	printf("\n%s", strerror(errno));
 
 	return (0);
