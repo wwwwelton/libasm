@@ -1,38 +1,38 @@
-SOURCES_FILES = main.c
-SOURCES_DIR = ./
+SOURCES := $(wildcard src/*.s)
 
-OBJ_DIR = objects
+HEADERS := $(wildcard src/*.h)
 
-HEADERS = header.h
+OBJECTS := $(patsubst src/%.s,objs/%.o,$(SOURCES))
 
-SOURCES = $(addprefix $(SOURCES_DIR)/, $(SOURCES_FILES))
+NAME := libasm.a
 
-OBJECTS = $(SOURCES: $(SOURCES_DIR)/%.c=$(OBJ_DIR)/%.o)
+AS := nasm
+AR := ar
 
-NAME = Libasm
+ASFLAGS := -f elf64
+ARFLAGS := rcs
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+objs/%.o: src/%.s
+	$(AS) $(ASFLAGS) $< -o $@
 
-RM = rm -rf
+all: $(NAME)
 
-$(OBJ_DIR)/%.o: $(SOURCES_DIR)/%.c $(HEADERS)
-				$(CC) $(CFLAGS) -c $< -o $@
+bonus: $(NAME)
 
-all:			$(NAME)
-
-$(NAME):		$(OBJ_DIR) $(OBJECTS) $(HEADERS)
-				$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME)
-
-$(OBJ_DIR):
-				mkdir -p $(OBJ_DIR)
+$(NAME): $(OBJ_DIR) $(OBJECTS) $(HEADERS)
+	$(AR) $(ARFLAGS) $(NAME) $(OBJECTS)
 
 clean:
-				$(RM) $(OBJ_DIR)
+	rm -rf objs
 
-fclean:			clean
-				$(RM) $(NAME)
+fclean: clean
+	rm -rf $(NAME)
 
-re:				fclean all
+re: fclean all
 
-.PHONY:			all clean fclean re
+$(OBJECTS): objs
+
+objs:
+	mkdir -p objs
+
+.PHONY: all clean fclean re bonus
