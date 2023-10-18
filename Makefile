@@ -4,13 +4,19 @@ HEADERS := $(wildcard src/*.h)
 
 OBJECTS := $(patsubst src/%.s,objs/%.o,$(SOURCES))
 
+TEST := $(wildcard test/*.c) main.c
+
+TEST_NAME := test.out
+
 NAME := libasm.a
 
 AS := nasm
 AR := ar
+CC := gcc
 
 ASFLAGS := -f elf64
 ARFLAGS := rcs
+CFLAGS := -Wall -Wextra -Werror
 
 objs/%.o: src/%.s
 	$(AS) $(ASFLAGS) $< -o $@
@@ -26,7 +32,7 @@ clean:
 	rm -rf objs
 
 fclean: clean
-	rm -rf $(NAME)
+	rm -rf $(NAME) $(TEST_NAME)
 
 re: fclean all
 
@@ -35,4 +41,8 @@ $(OBJECTS): objs
 objs:
 	mkdir -p objs
 
-.PHONY: all clean fclean re bonus
+test: $(NAME)
+	@$(CC) $(CFLAGS) $(TEST) $(NAME) -o $(TEST_NAME)
+	@./$(TEST_NAME)
+
+.PHONY: all clean fclean re bonus test
