@@ -16,7 +16,7 @@ CC := gcc
 
 ASFLAGS := -f elf64
 ARFLAGS := rcs
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -g
 
 objs/%.o: src/%.s
 	$(AS) $(ASFLAGS) $< -o $@
@@ -43,6 +43,6 @@ objs:
 
 test: $(NAME)
 	@$(CC) $(CFLAGS) $(TEST) $(NAME) -o $(TEST_NAME)
-	@./$(TEST_NAME)
+	@./$(TEST_NAME) ft_strcmp
 
 .PHONY: all clean fclean re bonus test
