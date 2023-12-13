@@ -46,43 +46,46 @@ CTEST(ft_strcmp, test7) {
 }
 
 CTEST(ft_strcmp, test8) {
-  char str1[] =
-      "Mussum Ipsum, cacilds vidis litro abertis.\
-       Mauris nec dolor in eros commodo tempor.";
+  int or = strcmp(
+             "Mussum Ipsum, cacilds vidis litro abertis.\
+              Mauris nec dolor in eros commodo tempor.",
+             "Mussum Ipsum, cacilds vidis litro abertis.\
+              Mauris nec dolor in eros commodo tempor.");
 
-  char str2[] =
+  int ft = ft_strcmp(
       "Mussum Ipsum, cacilds vidis litro abertis.\
-       Mauris nec dolor in eros commodo tempor.";
-
-  int or = strcmp(str1, str2);
-  int ft = ft_strcmp(str1, str2);
+       Mauris nec dolor in eros commodo tempor.",
+      "Mussum Ipsum, cacilds vidis litro abertis.\
+       Mauris nec dolor in eros commodo tempor.");
   ASSERT_EQUAL(or, ft);
 }
 
 CTEST(ft_strcmp, test9) {
-  char str1[] =
-      "Mussum Ipsum, cacilds vidis litro abertis.\
-       Mauris nec dolor in eros commodo tempor!";
+  int or = strcmp(
+             "Mussum Ipsum, cacilds vidis litro abertis.\
+              Mauris nec dolor in eros commodo tempor!",
+             "Mussum Ipsum, cacilds vidis litro abertis.\
+              Mauris nec dolor in eros commodo tempor.");
 
-  char str2[] =
+  int ft = ft_strcmp(
       "Mussum Ipsum, cacilds vidis litro abertis.\
-       Mauris nec dolor in eros commodo tempor.";
-
-  int or = strcmp(str1, str2);
-  int ft = ft_strcmp(str1, str2);
+       Mauris nec dolor in eros commodo tempor!",
+      "Mussum Ipsum, cacilds vidis litro abertis.\
+       Mauris nec dolor in eros commodo tempor.");
   ASSERT_EQUAL(or, ft);
 }
 
 CTEST(ft_strcmp, test10) {
-  char str1[] =
-      "Mussum Ipsum, cacilds vidis litro abertis.\
-       Mauris nec dolor in eros commodo tempor.";
+  int or = strcmp(
+             "Mussum Ipsum, cacilds vidis litro abertis.\
+              Mauris nec dolor in eros commodo tempor.",
+             "Mussum Ipsum, cacilds vidis litro abertis.\
+              Mauris nec dolor in eros commodo tempor!");
 
-  char str2[] =
+  int ft = ft_strcmp(
       "Mussum Ipsum, cacilds vidis litro abertis.\
-       Mauris nec dolor in eros commodo tempor!";
-
-  int or = strcmp(str1, str2);
-  int ft = ft_strcmp(str1, str2);
+       Mauris nec dolor in eros commodo tempor.",
+      "Mussum Ipsum, cacilds vidis litro abertis.\
+       Mauris nec dolor in eros commodo tempor!");
   ASSERT_EQUAL(or, ft);
 }
