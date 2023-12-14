@@ -43,6 +43,6 @@ objs:
 
 test: $(NAME)
 	@$(CC) $(CFLAGS) $(TEST) $(NAME) -o $(TEST_NAME)
-	@./$(TEST_NAME) ft_strcmp
+	@./$(TEST_NAME) ft_strdup
 
 .PHONY: all clean fclean re bonus test
