@@ -4,7 +4,7 @@
 #include "ctest.h"
 
 CTEST(ft_strdup, test1) {
-  char * or = strdup("");
+  char *or = strdup("");
   char *ft = ft_strdup("");
   ASSERT_STR(or, ft);
 
@@ -13,7 +13,7 @@ CTEST(ft_strdup, test1) {
 }
 
 CTEST(ft_strdup, test2) {
-  char * or = strdup("42");
+  char *or = strdup("42");
   char *ft = ft_strdup("42");
   ASSERT_STR(or, ft);
 
@@ -22,7 +22,7 @@ CTEST(ft_strdup, test2) {
 }
 
 CTEST(ft_strdup, test3) {
-  char * or = strdup("Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor!");
+  char *or = strdup("Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor!");
   char *ft = ft_strdup("Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor!");
   ASSERT_STR(or, ft);
 
