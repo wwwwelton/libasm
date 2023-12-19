@@ -29,7 +29,7 @@ $(NAME): $(OBJ_DIR) $(OBJECTS) $(HEADERS)
 	$(AR) $(ARFLAGS) $(NAME) $(OBJECTS)
 
 clean:
-	rm -rf objs
+	rm -rf objs output.txt stdout.txt
 
 fclean: clean
 	rm -rf $(NAME) $(TEST_NAME)
@@ -43,6 +43,6 @@ objs:
 
 test: $(NAME)
 	@$(CC) $(CFLAGS) $(TEST) $(NAME) -o $(TEST_NAME)
-	@./$(TEST_NAME) ft_strdup
+	@./$(TEST_NAME) ft_write
 
 .PHONY: all clean fclean re bonus test
