@@ -32,3 +32,15 @@ void ft_list_clear(t_list *begin_list, void (*free_fct)(void *)) {
 //   element->next = *begin_list;
 //   *begin_list = element;
 // }
+
+// int ft_list_size(t_list *begin_list) {
+//   int size = 0;
+
+//   t_list *node = begin_list;
+//   while (node) {
+//     size++;
+//     node = node->next;
+//   }
+
+//   return size;
+// }
