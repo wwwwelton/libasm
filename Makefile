@@ -12,7 +12,7 @@ NAME := libasm.a
 
 AS := nasm
 AR := ar
-CC := gcc
+CC := gcc -g3
 
 ASFLAGS := -f elf64
 ARFLAGS := rcs
@@ -43,6 +43,6 @@ objs:
 
 test: $(NAME)
 	@$(CC) $(CFLAGS) $(TEST) $(NAME) -o $(TEST_NAME)
-	@./$(TEST_NAME) ft_list_size
+	@clear && valgrind ./$(TEST_NAME) ft_list_sort
 
 .PHONY: all clean fclean re bonus test
