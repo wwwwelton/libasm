@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "test_header.h"
 
 // t_list *ft_list_create_elem(void *data) {
@@ -43,4 +45,24 @@ void ft_list_clear(t_list *begin_list, void (*free_fct)(void *)) {
 //   }
 
 //   return size;
+// }
+
+// (*cmp)(list_ptr->data, list_other_ptr->data);
+// void ft_list_sort(t_list **begin_list, int (*cmp)()) {
+//   int swapped = 1;
+
+//   while (swapped) {
+//     swapped = 0;
+//     t_list *node = *begin_list;
+
+//     while (node->next) {
+//       if (cmp((char *)node->data, (char *)node->next->data) > 0) {
+//         swapped = 1;
+//         void *tmp_data = node->data;
+//         node->data = node->next->data;
+//         node->next->data = tmp_data;
+//       }
+//       node = node->next;
+//     }
+//   }
 // }
