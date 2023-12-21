@@ -9,7 +9,7 @@ CTEST(ft_list_size, test1) {
   int elems[] = {42, 3, 10, 8, 67, 88, 22, 1};
 
   for (int i = 0; i < 8; i++) {
-    ft_list_push_front(&root, &elems[i]);
+    ft_list_push_front(&root, intdup(elems[i]));
   }
 
   ASSERT_EQUAL(ft_list_size(root), 8);
@@ -22,7 +22,7 @@ CTEST(ft_list_size, test2) {
   int elems[] = {42, 3, 10, 8, 67, 88, 22, 1};
 
   for (int i = 0; i < 7; i++) {
-    ft_list_push_front(&root, &elems[i]);
+    ft_list_push_front(&root, intdup(elems[i]));
   }
 
   ASSERT_EQUAL(ft_list_size(root), 7);
@@ -35,7 +35,7 @@ CTEST(ft_list_size, test3) {
   int elems[] = {42, 3, 10, 8, 67, 88, 22, 1};
 
   for (int i = 0; i < 1; i++) {
-    ft_list_push_front(&root, &elems[i]);
+    ft_list_push_front(&root, intdup(elems[i]));
   }
 
   ASSERT_EQUAL(ft_list_size(root), 1);

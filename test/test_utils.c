@@ -1,6 +1,17 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "test_header.h"
+
+int *intdup(int number) {
+  int *dup = (int *)malloc(sizeof(int));
+
+  if (dup == NULL)
+    return NULL;
+  *dup = number;
+
+  return dup;
+}
 
 // t_list *ft_list_create_elem(void *data) {
 //   t_list *element;
@@ -20,7 +31,8 @@ void ft_list_clear(t_list *begin_list, void (*free_fct)(void *)) {
     return;
   while (begin_list) {
     tmp_element = begin_list->next;
-    free_fct(&begin_list->data);
+    free(begin_list->data);
+    free(begin_list);
     begin_list = tmp_element;
   }
 }

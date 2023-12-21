@@ -22,8 +22,8 @@ CTEST(ft_list_sort, test1) {
   char *elems2[] = {"Y", "W", "V", "U", "T", "S", "R", "I", "H", "B"};
 
   for (int i = 0; i < 10; i++) {
-    ft_list_push_front(&root1, elems1[i]);
-    ft_list_push_front(&root2, elems2[i]);
+    ft_list_push_front(&root1, strdup(elems1[i]));
+    ft_list_push_front(&root2, strdup(elems2[i]));
   }
 
   ft_list_sort(&root1, ft_strcmp);
@@ -58,8 +58,8 @@ CTEST(ft_list_sort, test2) {
   int elems2[] = {93, 91, 80, 76, 70, 69, 54, 49, 35, 15};
 
   for (int i = 0; i < 10; i++) {
-    ft_list_push_front(&root1, &elems1[i]);
-    ft_list_push_front(&root2, &elems2[i]);
+    ft_list_push_front(&root1, intdup(elems1[i]));
+    ft_list_push_front(&root2, intdup(elems2[i]));
   }
 
   ft_list_sort(&root1, compare_int);
@@ -94,8 +94,8 @@ CTEST(ft_list_sort, test3) {
   char elems2[] = {'Z', 'Y', 'X', 'S', 'M', 'L', 'J', 'H', 'E', 'D'};
 
   for (int i = 0; i < 10; i++) {
-    ft_list_push_front(&root1, &elems1[i]);
-    ft_list_push_front(&root2, &elems2[i]);
+    ft_list_push_front(&root1, intdup(elems1[i]));
+    ft_list_push_front(&root2, intdup(elems2[i]));
   }
 
   ft_list_sort(&root1, compare_char);
