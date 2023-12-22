@@ -31,7 +31,7 @@ void ft_list_clear(t_list *begin_list, void (*free_fct)(void *)) {
     return;
   while (begin_list) {
     tmp_element = begin_list->next;
-    free(begin_list->data);
+    free_fct(begin_list->data);
     free(begin_list);
     begin_list = tmp_element;
   }
@@ -75,6 +75,46 @@ void ft_list_clear(t_list *begin_list, void (*free_fct)(void *)) {
 //         node->next->data = tmp_data;
 //       }
 //       node = node->next;
+//     }
+//   }
+// }
+
+// (*cmp)(list_ptr->data, data_ref);
+// (*free_fct)(list_ptr->data);
+// ft_list_remove_if(&root1, "U", ft_strcmp, free);
+// void ft_list_remove_if(t_list **begin_list,
+//                        void *data_ref,
+//                        int (*cmp)(),
+//                        void (*free_fct)(void *)) {
+//   t_list *prev = NULL;
+//   t_list *root = *begin_list;
+//   int removed = 1;
+
+//   if (!begin_list || !*begin_list || !data_ref || !cmp || !free_fct)
+//     return;
+
+//   while (removed) {
+//     root = *begin_list;
+//     removed = 0;
+
+//     if (root && cmp(root->data, data_ref) == 0) {
+//       *begin_list = root->next;
+//       free_fct(root->data);
+//       free(root);
+//       removed = 1;
+//       continue;
+//     }
+
+//     while (root && cmp(root->data, data_ref) != 0) {
+//       prev = root;
+//       root = root->next;
+//     }
+
+//     if (root) {
+//       prev->next = root->next;
+//       free_fct(root->data);
+//       free(root);
+//       removed = 1;
 //     }
 //   }
 // }
