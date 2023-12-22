@@ -43,6 +43,6 @@ objs:
 
 test: $(NAME)
 	@$(CC) $(CFLAGS) $(TEST) $(NAME) -o $(TEST_NAME)
-	@clear && valgrind ./$(TEST_NAME) ft_list_sort
+	@clear && valgrind ./$(TEST_NAME) ft_list_remove_if
 
 .PHONY: all clean fclean re bonus test
