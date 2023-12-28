@@ -12,11 +12,11 @@ NAME := libasm.a
 
 AS := nasm
 AR := ar
-CC := gcc -g3
+CC := gcc
 
-ASFLAGS := -f elf64
+ASFLAGS := -f elf64 -g -F dwarf
 ARFLAGS := rcs
-CFLAGS := -Wall -Wextra -Werror -g
+CFLAGS := -Wall -Wextra -Werror -g3
 
 objs/%.o: src/%.s
 	$(AS) $(ASFLAGS) $< -o $@
@@ -43,6 +43,6 @@ objs:
 
 test: $(NAME)
 	@$(CC) $(CFLAGS) $(TEST) $(NAME) -o $(TEST_NAME)
-	@clear && valgrind ./$(TEST_NAME) ft_list_remove_if
+	@clear && ./$(TEST_NAME) ft_list_sort
 
 .PHONY: all clean fclean re bonus test
