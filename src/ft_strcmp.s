@@ -3,11 +3,6 @@ section .text
 
 ;int ft_strcmp(const char *s1, const char *s2);
 ft_strcmp:
-    push r10
-    push r11
-    push rdi
-    push rsi
-
     dec rdi         ;s1--
     dec rsi         ;s2--
 
@@ -42,9 +37,5 @@ ft_strcmp:
     jmp .end
 
 .end:
-    pop rsi
-    pop rdi
-    pop r11
-    pop r10
 
     ret
