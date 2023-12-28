@@ -4,6 +4,12 @@ section .text
 ;void ft_list_sort(t_list **begin_list, int (*cmp)());
 ;(*cmp)(list_ptr->data, list_other_ptr->data);
 ft_list_sort:
+    push r8
+    push r9
+    push r12
+    push r13
+    push r14
+
     mov r8, rdi     ;r8 = **begin_list
     mov r9, rsi     ;r9 = int (*cmp)() (ft_strcmp)
     mov r12, 1      ;swapped = 1;
@@ -36,6 +42,10 @@ ft_list_sort:
     jmp .loop2
 
 .end:
-    mov rdi, r8     ;restore **begin_list
-    mov rsi, r9     ;restore int (*cmp)() (ft_strcmp)
+    pop r14
+    pop r13
+    pop r12
+    pop r9
+    pop r8
+
     ret             ;return the content in the rax
