@@ -1,6 +1,14 @@
+%macro align_stack 0
+    mov rax, rsp
+    and rax, 15     ; Check the lower 4 bits to determine alignment
+    jz .aligned     ; If zero, already aligned
+    sub rsp, 8      ; Otherwise, subtract 8 to align
+    .aligned:
+%endmacro
+
 section .text
     global ft_atoi_base
-    extern ft_strlen, printf, is_valid_base, trim_spaces, check_signal, char_to_value1, char_to_value2
+    extern ft_strlen, ft_isspace, ft_sstrlen, print_str, printf, not1, check_signal, is_valid_base, char_to_value1, char_to_value2
 
 ; ;int isspace(int c)
 ; ft_isspace:
@@ -12,7 +20,7 @@ section .text
 ;     jl .itsnotspace
 
 ; .itsnotspace:
-;     mov rax, 0      ;isspace == FALSE
+    ; mov rax, 0      ;isspace == FALSE
 ;     ret
 
 ; .isspace:
@@ -147,109 +155,170 @@ section .text
 ;RDI, RSI, RDX, RCX, R8, R9
 ;R12, R13, R14, R15
 ft_atoi_base:
+    push r9
     push r12
     push r13
     push r14
     push r15
+    push rsi
 
+    mov r9, 0       ;tmp rdi
     mov r12, 1      ;signal
     mov r13, 0      ;value
     mov r14, 0      ;result
     mov r15, 0      ;base_len
+    mov r13, rsi    ;tmp rsi
 
+.check_null:
     cmp rdi, 0      ;str == NULL
     je .error_null
     cmp rsi, 0      ;base == NULL
     je .error_null
 
-    push rdi
-    push rsi
-    mov rdi, rsi    ;rdi = rsi(base)
-    call is_valid_base
-    cmp rax, 0      ;if (!is_valid_base(base))
-    je .reset_error_base
-    pop rsi
-    pop rdi
-
-    push rdi
-    lea rax, [rdi]  ;rdi = &rdi (&str)
-    push rax
-    mov rdi, rsp
-    call trim_spaces
-    call check_signal
-    mov r12, rax    ;signal = check_signal()
-    pop rax
-    pop rdi
-
+.check_base:
     push rdi
     mov rdi, rsi
-    call ft_strlen
-    mov r15, rax    ;r15 = base_len
+    call is_valid_base
+    cmp rax, 0
+    je .error_invalid_base
     pop rdi
 
     push rdi
-    mov rcx, [rdi]
-    mov rdi, rcx
-    call char_to_value1
+    call print_str
     pop rdi
-    mov r13, rax    ;r13(value) = char_to_value(str[0], base)
 
-.loop:
-    cmp byte [rdi], 0
-    je .end
-    cmp r13, -1     ;while (value != -1)
-    je .end
+    mov r14, 0
+    mov r15, rdi
 
-    mov rax, r14    ;rax = result
-    mul r15         ;rax = r14(result) * r15(base_len)
-    mov r14, rax    ;r14(result) = rax
-    add r14, r13    ;r14(result) = r14(result) + r13(value)
+.trim_spaces:
+    mov rdi, [r15 + r14]
+    sub rsp, 8
+    call ft_isspace
+    add rsp, 8
+    cmp rax, 1
+    je .trim_space
 
-    inc rdi         ;str++
+    lea rdi, [r15 + r14]
+    push rdi
+    call print_str
+    pop rdi
+
+.check_signal:
+    cmp byte [rdi], '+'
+    je .set_signal_pos
+    cmp byte [rdi], '-'
+    je .set_signal_neg
 
     push rdi
-    mov rcx, [rdi]
-    mov rdi, rcx
-    call char_to_value2
+    call print_str
     pop rdi
-    mov r13, rax    ;r13(value) = char_to_value(str[0], base)
 
-    jmp .loop
+    mov r14, 0
+    mov r15, 0
+    pop rsi         ;use .endd2 here
+    mov rsi, r13
 
-.error:
-    pop r15
-    pop r14
-    pop r13
-    pop r12
+.get_base_len:
+    push rdi
+    push rsi
+    mov rdi, rsi
+    call ft_sstrlen
+    mov r15, rax
+    pop rsi
+    pop rdi
 
+.atoi_base:
     mov rax, 0
-    ret
+    push rdi
+    push rsi
+    mov rdi, [rdi + rax]
+    mov rsi, rsi
+    call char_to_value2
+    pop rsi
+    pop rdi
+    mov r13, rax
+    cmp r13b, -1
+    je .end
+    mov r14, r13
+    mov rax, 0
+
+; mov r9, 0       ;tmp
+; mov r12, 0      ;signal
+; mov r13, 0      ;value
+; mov r14, 0      ;result
+; mov r15, 0      ;base_len
+.atoi_base_loop:
+    inc rax
+    push rdi
+    push rsi
+    push rax
+    mov rdi, [rdi + rax]
+    mov rsi, rsi
+    sub rsp, 8
+    call char_to_value2
+    add rsp, 8
+    mov r13, rax
+    pop rax
+    pop rdi
+    pop rsi
+    cmp r13b, -1
+    je .end
+    push rax
+    mov rax, r14
+    mul r15
+    add rax, r13
+    mov r14, rax
+    pop rax
+    jmp .atoi_base_loop
+
+    ; push rdi
+    ; push rsi
+    ; mov rdi, rsi
+    ; call print_str
+    ; pop rsi
+    ; pop rdi
+
+    ; jmp .end
+
+.set_signal_neg:
+    mov r12, -1
+    inc rdi
+    jmp .check_signal
+
+.set_signal_pos:
+    mov r12, 1
+    inc rdi
+    jmp .check_signal
+
+.trim_space:
+    inc r14
+    jmp .trim_spaces
 
 .error_null:
+    pop rsi
     pop r15
     pop r14
     pop r13
     pop r12
-
+    pop r9
     mov rax, 0
     ret
 
-.reset_error:
-    pop rsi
+.error_invalid_base:
     pop rdi
-    jmp .error
-
-.reset_error_base:
     pop rsi
-    pop rdi
     pop r15
     pop r14
     pop r13
     pop r12
-
+    pop r9
     mov rax, 0
     ret
 
+; mov r12, 0      ;signal
+; mov r13, 0      ;value
+; mov r14, 0      ;result
+; mov r15, 0      ;base_len
 .end:
     mov rax, r14
     mul r12         ;result * sign;
@@ -258,5 +327,32 @@ ft_atoi_base:
     pop r14
     pop r13
     pop r12
+    pop r9
+    ret
 
+.endd:
+    pop rsi
+    pop r15
+    pop r14
+    pop r13
+    pop r12
+    pop r9
+    mov rax, 21
+    ret
+
+.endd2:
+    pop r15
+    pop r14
+    pop r13
+    pop r12
+    pop r9
+    mov rax, 22
+    ret
+
+.endd3:
+    pop r15
+    pop r14
+    pop r13
+    pop r12
+    pop r9
     ret
