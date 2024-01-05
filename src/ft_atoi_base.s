@@ -8,7 +8,7 @@
 
 section .text
     global ft_atoi_base
-    extern ft_strlen, ft_isspace, ft_sstrlen, print_str, printf, not1, check_signal, is_valid_base, char_to_value1, char_to_value2
+    extern ft_strlen, ft_isspace, print_int, ft_sstrlen, print_str, printf, not1, check_signal, is_valid_base, char_to_value1, char_to_value2
 
 ; ;int isspace(int c)
 ; ft_isspace:
